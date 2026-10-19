@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #ffffff;
+  --color-surface: #fff6ea;
+  --color-border: #f0e2d0;
+  --color-fg: #1f1a17;
+  --color-muted: #6b625b;
+  --color-accent: #f28c1b;
+  --color-accent-dark: #d9740a;
+  --color-cream: #f6f1e7;
+  --color-ink: #1f2a22;
+  --color-brand: #1f7a3d;
+  --color-brand-dark: #166534;
+}
+
+@theme inline {
+  --font-heading: var(--font-heading-loaded);
+  --font-body: var(--font-body-loaded);
+  --font-logo: var(--font-logo-loaded);
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-body);
+}
+
+@keyframes leg-swing {
+  0%,
+  100% {
+    transform: rotate(24deg);
+  }
+  50% {
+    transform: rotate(-24deg);
+  }
+}
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-1.2px);
+  }
+}
+@keyframes ground {
+  to {
+    stroke-dashoffset: 8;
+  }
+}
+
+.leg {
+  transform-box: fill-box;
+  transform-origin: 20% 0%;
+  animation: leg-swing 0.6s ease-in-out infinite;
+}
+.leg-alt {
+  animation-delay: -0.3s;
+}
+.bob {
+  animation: bob 0.3s ease-in-out infinite;
+}
+.ground {
+  stroke-dasharray: 3 5;
+  animation: ground 0.6s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .leg,
+  .bob,
+  .ground {
+    animation: none;
+  }
+}
