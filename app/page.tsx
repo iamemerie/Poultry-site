@@ -1,13 +1,17 @@
 import Image from "next/image";
 import Navbar from "./components/Nav";
 import Species from "./components/Species";
+import Footer from "./components/Footer";
+import PreorderSection from "./components/PreorderSection";
+import Testimonials from "./components/Testimonials";
+import AboutFarm from "./components/AboutFarm";
 
 export default function Home() {
   return (
     <>
       <Navbar />
       <main>
-        <section className="relative h-[70vh] min-h-[480px] overflow-hidden">
+        <section className="relative h-[70vh] min-h-[480px] overflow-x-hidden">
           <Image
             src="/ee.jpg"
             alt="Brown free-range hens walking in green grass"
@@ -27,14 +31,18 @@ export default function Home() {
             </h2>
             <p className="text-white">Healthy poultry, laid with care.</p>
             <div className="flex gap-3">
-              <button className="self-start rounded-full font-medium bg-accent px-6 py-4 text-md text-white transition hover:bg-accent-dark md:inline-block">
-                CREATE ACCOUNT
+              <button className="self-start rounded-full font-medium font-logo bg-brand px-6 py-4 text-md text-white transition hover:bg-accent-dark md:inline-block">
+                Create an account<span className="font-bold"> →</span>
               </button>
             </div>
           </div>
         </section>
         <Species />
+        <AboutFarm />
+        <Testimonials />
+        <PreorderSection />
       </main>
+      <Footer />
     </>
   );
 }

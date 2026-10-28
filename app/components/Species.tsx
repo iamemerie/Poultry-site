@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { animals } from "@/app/data/animals";
@@ -12,7 +14,7 @@ export default function Species() {
           Our animals
         </p>
         <h2 className="mt-2 font-heading text-4xl font-extrabold text-ink md:text-5xl">
-          Meet what we raise
+          What we raise
         </h2>
       </div>
 

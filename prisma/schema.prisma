@@ -1,0 +1,80 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+
+enum WaitlistStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model WaitingListEntry {
+  id       Int            @id @default(autoincrement())
+  email    String         @unique
+  name     String
+  notes    String?
+  status   WaitlistStatus @default(PENDING)   
+  createdAt DateTime      @default(now())
+}
+
+enum Animal {
+  CHICKEN
+  GOAT
+  SWINE
+  CATTLE
+  TURKEY
+  SHEEP
+}
+
+enum Product {
+  EGGS
+  MEAT
+  LIVE_ANIMAL
+  BREEDING_STOCK
+  MILK
+}
+
+enum PreOrderStatus {
+  PENDING
+  CONFIRMED
+  FULFILLED
+  CANCELLED
+}
+
+model PreOrder {
+  id           Int             @id @default(autoincrement())
+  name         String
+  email        String
+  phone        String
+  animal       Animal
+  product      Product
+  quantity     Int
+  deliveryArea String
+  status       PreOrderStatus  @default(PENDING)
+  createdAt    DateTime        @default(now())
+}
+
+model ContactMessage {
+  id           Int          @id @default(autoincrement())
+  name         String
+  email        String       @unique
+  subject      String
+  message      String?
+  createdAt    DateTime     @default(now())
+}
+
+model NewsletterSubscriber {
+  id           Int               @id @default(autoincrement())
+  email        String            @unique
+  createdAt    DateTime          @default(now())
+}

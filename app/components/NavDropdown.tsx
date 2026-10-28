@@ -106,7 +106,7 @@ export default function NavDropdown({
               if ((e.target as HTMLElement).closest("a")) setOpen(false);
             }}
           >
-            <div className="rounded-3xl border border-ink/10 bg-cream/95 text-ink shadow-2xl backdrop-blur-xl">
+            <div className="rounded-3xl border border-ink/10 bg-cream text-ink shadow-2xl">
               {children}
             </div>
           </motion.div>

@@ -260,4 +260,50 @@ export const animals = [
       },
     ],
   },
+  {
+    slug: "sheep",
+    name: "Sheep",
+    image: "/sheep.jpeg",
+    alt: "Sheep",
+    blurb:
+      "Sheep are domesticated ruminants that are raised for their wool, meat, and milk. They are social animals that form strong flock bonds and are known for their grazing behavior.",
+    offers: [
+      {
+        name: "Meat",
+        description:
+          "Tender and flavorful lamb and mutton, available in various cuts.",
+        price: "₦2500 per One(Kg)",
+      },
+      {
+        name: "Wool",
+        description: "High-quality wool for textile production.",
+        price: "₦5000 per kg",
+      },
+      {
+        name: "Lambs",
+        description: "Young sheep for those looking to start their own flock.",
+        price: "₦100000 per lamb",
+      },
+    ],
+    feeds: [
+      {
+        name: "Forage and browse",
+        description:
+          "Quality hay, grass and leaves make up most of a goat's diet.",
+      },
+      {
+        name: "Concentrate feed",
+        stage: "Kids and lactating does",
+        description: "Extra energy and protein for animals with higher needs.",
+      },
+      {
+        name: "Minerals",
+        description: "A goat-specific mineral supplement, always on offer.",
+      },
+      {
+        name: "Clean water",
+        description: "Always available, and checked and refilled every day.",
+      },
+    ],
+  },
 ];
