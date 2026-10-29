@@ -32,7 +32,7 @@ export default function Home() {
             <p className="text-white">Healthy poultry, laid with care.</p>
             <div className="flex gap-3">
               <Link
-                href="/register"
+                href="/sign-up"
                 className="self-start rounded-full bg-brand px-6 py-4 text-base font-medium text-cream transition hover:bg-brand-dark"
               >
                 Create an account <span className="font-bold">→</span>
