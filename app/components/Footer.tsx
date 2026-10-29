@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { Mail, Phone, MapPin } from "lucide-react";
+import Year from "./Year";
 
 export default function Footer() {
   return (
@@ -109,8 +110,8 @@ export default function Footer() {
         </div>
         {/* Bottom Bar */}
         <div className="mt-16 flex flex-col items-center justify-between border-t border-cream/10 pt-8 text-xs text-cream/60 md:flex-row">
-          <p suppressHydrationWarning>
-            © {new Date().getFullYear()} E-Poultry. All rights reserved.
+          <p>
+            © <Year /> E-Poultry. All rights reserved.
           </p>
           <div className="mt-4 flex gap-6 md:mt-0">
             <Link href="/privacy" className="transition hover:text-brand">

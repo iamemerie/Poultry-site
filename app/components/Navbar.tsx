@@ -3,12 +3,14 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Egg, Menu, Search, User, X } from "lucide-react";
+import { LogIn, LogOut, Menu, Search, X } from "lucide-react";
 import NavDropdown from "./NavDropdown";
 import NavPill from "./NavPill";
 import SpeciesPanel from "./SpeciesPanel";
 import DiseasesPanel from "./DiseasesPanel";
 import AnimatedLogo from "./AnimatedLogo";
+import { supabase } from "@/lib/supabase";
+import { useRouter } from "next/navigation";
 
 // Items listed here get a dropdown panel; every other item is a plain link.
 const panels: Record<string, React.ReactNode> = {
@@ -27,6 +29,9 @@ const navItems = [
 const iconBtn =
   "grid h-10 w-10 place-items-center rounded-full text-ink/70 transition hover:bg-brand/10 hover:text-brand";
 
+const authBtn =
+  "rounded-full px-4 py-2 text-sm font-medium text-ink/70 transition hover:bg-brand/10 hover:text-brand";
+
 // One source of truth for desktop link styling. The highlight itself is the
 // sliding NavPill, so a link only needs to change its text colour.
 const linkClass = (on: boolean) =>
@@ -38,6 +43,7 @@ export default function Navbar() {
   const [open, setOpen] = React.useState(false);
   const [scrolled, setScrolled] = React.useState(false);
   const [hovered, setHovered] = React.useState<string | null>(null);
+  const [user, setUser] = React.useState(false);
   const pathname = usePathname();
 
   // The pill sits on the hovered link, and returns to the current page's link
@@ -50,6 +56,26 @@ export default function Navbar() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Track whether someone is logged in, and keep it in sync across tabs.
+  React.useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => setUser(!!data.session));
+    const { data: listener } = supabase.auth.onAuthStateChange(
+      (_event, session) => setUser(!!session),
+    );
+    return () => listener.subscription.unsubscribe();
+  }, []);
+
+  const router = useRouter();
+
+  async function logOut() {
+    await supabase.auth.signOut();
+    setUser(false);
+    router.push("/login");
+  }
+
+  const hideOn = ["/login", "/sign-up"];
+  if (hideOn.includes(pathname)) return null;
 
   return (
     <header className="fixed inset-x-0 top-3 z-50 px-3 font-body">
@@ -115,11 +141,30 @@ export default function Navbar() {
             <button type="button" aria-label="Search" className={iconBtn}>
               <Search size={19} />
             </button>
-            <Link href="/account" aria-label="Account" className={iconBtn}>
-              <User size={19} />
-            </Link>
+
+            {user ? (
+              <button
+                type="button"
+                onClick={logOut}
+                aria-label="Log out"
+                title="Log out"
+                className={iconBtn}
+              >
+                <LogOut size={19} />
+              </button>
+            ) : (
+              <Link
+                href="/login"
+                aria-label="Log in"
+                title="Log in"
+                className={iconBtn}
+              >
+                <LogIn size={19} />
+              </Link>
+            )}
+
             <Link
-              href="/order-now"
+              href="/pre-order"
               className="ml-2 hidden rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-cream transition hover:bg-brand-dark md:inline-block"
             >
               Order now
@@ -164,7 +209,7 @@ export default function Navbar() {
               })}
             </ul>
             <Link
-              href="/order-now"
+              href="/pre-order"
               onClick={() => setOpen(false)}
               className="mt-2 block rounded-full bg-brand px-5 py-3 text-center font-semibold text-cream"
             >

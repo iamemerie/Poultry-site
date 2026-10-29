@@ -95,14 +95,16 @@ export default function WaitingListPage() {
           </button>
         </form>
 
-        <div
-          role="status"
-          className={`mt-6 rounded-xl px-4 py-3 text-center text-sm ${
-            message.ok ? "bg-brand/10 text-brand" : "bg-red-50 text-red-600"
-          }`}
-        >
-          {message.text}
-        </div>
+        {message && (
+          <div
+            role="status"
+            className={`mt-6 rounded-xl px-4 py-3 text-center text-sm ${
+              message.ok ? "bg-brand/10 text-brand" : "bg-red-50 text-red-600"
+            }`}
+          >
+            {message.text}
+          </div>
+        )}
       </main>
     </>
   );

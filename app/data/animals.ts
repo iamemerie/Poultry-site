@@ -190,7 +190,7 @@ export const animals = [
       {
         name: "Adult Cattle",
         description: "Adult cattle for those looking to expand their herd.",
-        price: "₦1.500.000 per adult",
+        price: "₦1,500,000 per adult",
       },
     ],
     feeds: [
@@ -287,18 +287,17 @@ export const animals = [
     ],
     feeds: [
       {
-        name: "Forage and browse",
-        description:
-          "Quality hay, grass and leaves make up most of a goat's diet.",
+        name: "Pasture and hay",
+        description: "Good-quality forage is the base of a sheep's diet.",
       },
       {
         name: "Concentrate feed",
-        stage: "Kids and lactating does",
+        stage: "Lambs and lactating ewes",
         description: "Extra energy and protein for animals with higher needs.",
       },
       {
-        name: "Minerals",
-        description: "A goat-specific mineral supplement, always on offer.",
+        name: "Mineral lick",
+        description: "A sheep-specific mineral supplement, always available.",
       },
       {
         name: "Clean water",

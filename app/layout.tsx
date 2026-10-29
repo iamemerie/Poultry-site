@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Bricolage_Grotesque, DM_Sans } from "next/font/google";
 import "./globals.css";
 import Cursor from "./components/Cursor";
-import Navbar from "./components/Nav";
+import Navbar from "./components/Navbar";
+import BackToTop from "./components/BackToTop";
 
 const heading = Bricolage_Grotesque({
   variable: "--font-heading-loaded",
@@ -15,9 +16,9 @@ const body = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Green Ranch | Fresh Eggs & Healthy Hens",
+  title: "E-poultry",
   description:
-    "Healthy hens, fresh eggs and quality poultry. Pre-order or join our waiting list.",
+    "Healthy livestocks, fresh eggs and quality poultry. Pre-order or join our waiting list.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -30,6 +31,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Navbar />
         {children}
         <Cursor />
+        <BackToTop />
       </body>
     </html>
   );
