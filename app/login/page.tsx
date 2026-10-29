@@ -1,22 +1,25 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import AuthCard from "@/app/components/AuthCard";
-import { useRouter } from "next/navigation";
 
 const fieldClass =
   "mt-1 w-full rounded-xl border border-ink/15 bg-white px-4 py-3 text-ink outline-none transition focus:border-brand focus:ring-4 focus:ring-brand/10";
 
-export default function LoginPage() {
+function LoginForm() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  // Where to send the visitor after logging in. Defaults to the home page.
+  const next = searchParams.get("next") ?? "/";
+
   const [form, setForm] = useState({ email: "", password: "" });
   const [sending, setSending] = useState(false);
   const [message, setMessage] = useState<{ text: string; ok: boolean } | null>(
     null,
   );
-
-  const router = useRouter();
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -32,9 +35,9 @@ export default function LoginPage() {
 
     if (error) {
       setMessage({ text: "Email or password is incorrect.", ok: false });
-    }  else {    
-        router.push("/");
-        router.refresh();
+    } else {
+      router.push(next);
+      router.refresh();
     }
   }
 
@@ -108,5 +111,14 @@ export default function LoginPage() {
         </p>
       )}
     </AuthCard>
+  );
+}
+
+// useSearchParams needs a Suspense boundary, or the build fails.
+export default function LoginPage() {
+  return (
+    <Suspense fallback={null}>
+      <LoginForm />
+    </Suspense>
   );
 }

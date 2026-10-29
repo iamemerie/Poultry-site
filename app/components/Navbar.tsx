@@ -7,7 +7,6 @@ import { LogIn, LogOut, Menu, Search, X } from "lucide-react";
 import NavDropdown from "./NavDropdown";
 import NavPill from "./NavPill";
 import SpeciesPanel from "./SpeciesPanel";
-import DiseasesPanel from "./DiseasesPanel";
 import AnimatedLogo from "./AnimatedLogo";
 import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
@@ -15,7 +14,6 @@ import { useRouter } from "next/navigation";
 // Items listed here get a dropdown panel; every other item is a plain link.
 const panels: Record<string, React.ReactNode> = {
   "/species": <SpeciesPanel />,
-  "/diseases": <DiseasesPanel />,
 };
 
 const navItems = [

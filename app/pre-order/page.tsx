@@ -1,6 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { supabase } from "@/lib/supabase";
 
 const ANIMALS = [
   { value: "CHICKEN", label: "Chicken" },
@@ -24,20 +28,49 @@ const fieldClass =
 
 const labelClass = "block text-sm font-medium text-ink";
 
-export default function PreOrderPage() {
+function PreOrderForm() {
+  // Read the animal and product from the link, e.g. /pre-order?animal=CHICKEN&product=EGGS.
+  // Anything not in the lists falls back to the defaults.
+  const params = useSearchParams();
+  const animalParam = params.get("animal") ?? "";
+  const productParam = params.get("product") ?? "";
+  const initialAnimal = ANIMALS.some((a) => a.value === animalParam)
+    ? animalParam
+    : "CHICKEN";
+  const initialProduct = PRODUCTS.some((p) => p.value === productParam)
+    ? productParam
+    : "EGGS";
+
   const [form, setForm] = useState({
     name: "",
     email: "",
     phone: "",
     deliveryArea: "",
     quantity: "1",
-    animal: "CHICKEN",
-    product: "EGGS",
+    animal: initialAnimal,
+    product: initialProduct,
   });
   const [sending, setSending] = useState(false);
   const [message, setMessage] = useState<{ text: string; ok: boolean } | null>(
     null,
   );
+
+  const router = useRouter();
+  const pathname = usePathname();
+  const [checking, setChecking] = useState(true);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      if (!data.session) {
+        const query = window.location.search;
+        router.replace(`/login?next=${encodeURIComponent(pathname + query)}`);
+      } else {
+        setChecking(false);
+      }
+    });
+  }, [router, pathname]);
+
+  if (checking) return null;
 
   function update(field: keyof typeof form, value: string) {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -88,12 +121,11 @@ export default function PreOrderPage() {
           Reserve your order
         </h1>
         <p className="mt-3 max-w-xl text-ink/70">
-          Tell us what you need. We'll call or message you to confirm.
+          Tell us what you need. We&apos;ll call or message you to confirm.
         </p>
       </div>
 
       <div className="grid gap-6 md:grid-cols-[1fr_340px]">
-        {/* Form card */}
         <form
           onSubmit={handleSubmit}
           className="rounded-3xl border border-ink/10 bg-white p-6 shadow-xl shadow-black/5 md:p-10"
@@ -238,7 +270,6 @@ export default function PreOrderPage() {
           )}
         </form>
 
-        {/* Summary card, updates as the visitor chooses */}
         <aside className="h-fit rounded-3xl bg-brand p-6 text-cream shadow-xl shadow-brand/20 md:sticky md:top-32 md:p-8">
           <p className="text-xs font-semibold uppercase tracking-widest text-cream/60">
             Your reservation
@@ -273,5 +304,14 @@ export default function PreOrderPage() {
         </aside>
       </div>
     </main>
+  );
+}
+
+// useSearchParams needs a Suspense boundary, or the build fails.
+export default function PreOrderPage() {
+  return (
+    <Suspense fallback={null}>
+      <PreOrderForm />
+    </Suspense>
   );
 }

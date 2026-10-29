@@ -5,6 +5,8 @@ import Footer from "./components/Footer";
 import Testimonials from "./components/Testimonials";
 import AboutFarm from "./components/AboutFarm";
 import Link from "next/link";
+import StockSummary from "./components/StockSummary";
+import { Suspense } from "react";
 
 export default function Home() {
   return (
@@ -40,6 +42,15 @@ export default function Home() {
             </div>
           </div>
         </section>
+        <Suspense
+          fallback={
+            <section className="mx-auto max-w-4xl px-6 py-20">
+              <div className="mx-auto h-56 w-56 animate-pulse rounded-full bg-cream" />
+            </section>
+          }
+        >
+          <StockSummary />
+        </Suspense>
         <Species />
         <AboutFarm />
         <Testimonials />
