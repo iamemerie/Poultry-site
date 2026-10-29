@@ -2,7 +2,6 @@ import Image from "next/image";
 import Navbar from "./components/Navbar";
 import Species from "./components/Species";
 import Footer from "./components/Footer";
-import PreorderSection from "./components/PreorderSection";
 import Testimonials from "./components/Testimonials";
 import AboutFarm from "./components/AboutFarm";
 import Link from "next/link";
@@ -44,7 +43,6 @@ export default function Home() {
         <Species />
         <AboutFarm />
         <Testimonials />
-        <PreorderSection />
       </main>
       <Footer />
     </>
