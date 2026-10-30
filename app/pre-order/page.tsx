@@ -2,9 +2,6 @@
 
 import { Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { useEffect } from "react";
-import { usePathname, useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabase";
 
 const ANIMALS = [
   { value: "CHICKEN", label: "Chicken" },
@@ -54,23 +51,6 @@ function PreOrderForm() {
   const [message, setMessage] = useState<{ text: string; ok: boolean } | null>(
     null,
   );
-
-  const router = useRouter();
-  const pathname = usePathname();
-  const [checking, setChecking] = useState(true);
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
-      if (!data.session) {
-        const query = window.location.search;
-        router.replace(`/login?next=${encodeURIComponent(pathname + query)}`);
-      } else {
-        setChecking(false);
-      }
-    });
-  }, [router, pathname]);
-
-  if (checking) return null;
 
   function update(field: keyof typeof form, value: string) {
     setForm((prev) => ({ ...prev, [field]: value }));
